@@ -1,0 +1,26 @@
+<web-app>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AirlineServlet</servlet-name>
+        <servlet-class>AirlineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AirlineServlet</servlet-name>
+        <url-pattern>/AirlineServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AirportServlet</servlet-name>
+        <servlet-class>AirportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AirportServlet</servlet-name>
+        <url-pattern>/AirportServlet</url-pattern>
+    </servlet-mapping>
+</web-app>
