@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AirlineServlet")
 public class AirlineServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -27,7 +27,7 @@ public class AirlineServlet extends HttpServlet {
         
         response.sendRedirect("airline.jsp"); // Sau khi thực hiện hành động, quay lại trang airline.jsp
     }
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 

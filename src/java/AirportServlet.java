@@ -34,6 +34,7 @@ public class AirportServlet extends HttpServlet {
                         rs.getString("ContactInfo")
                 ));
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
