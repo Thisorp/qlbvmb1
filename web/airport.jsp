@@ -37,10 +37,10 @@
         </tr>
         <c:forEach var="airport" items="${airports}">
             <tr>
-                <td>${airport.id}</td>
-                <td>${airport.name}</td>
-                <td>${airport.location}</td>
-                <td>${airport.contactInfo}</td>
+                 <td>${airport.id}</td>
+                 <td>${airport.name}</td>
+                 <td>${airport.location}</td>
+                 <td>${airport.contactInfo}</td>
                 <td>
                     <!-- Sửa -->
                     <form action="AirportServlet" method="POST" style="display:inline;">

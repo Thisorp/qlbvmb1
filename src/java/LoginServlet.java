@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class LoginServlet extends HttpServlet {
     // Đảm bảo bạn đã cấu hình file web.xml hoặc sử dụng annotations để khai báo servlet
-
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy thông tin đăng nhập từ form
         String username = request.getParameter("username");
@@ -33,9 +33,9 @@ public class LoginServlet extends HttpServlet {
                 if (role.equals("admin")) {
                     response.sendRedirect("admin.jsp");
                 } else if (role.equals("airport")) {
-                    response.sendRedirect("airport.jsp");
+                    response.sendRedirect("AirportServlet");
                 } else if (role.equals("airline")) {
-                    response.sendRedirect("airline.jsp");
+                    response.sendRedirect("FlightServlet");
                 } else {
                     response.sendRedirect("login.jsp?error=Invalid Role");
                 }
