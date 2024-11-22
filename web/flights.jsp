@@ -100,5 +100,6 @@
                 }
             %>
         </table>
+            <jsp:include page="airline.jsp"></jsp:include>
     </body>
 </html>
