@@ -1,1 +1,1 @@
-khoa chinh booking tự tăng
+khóa chính booking tự tăng
