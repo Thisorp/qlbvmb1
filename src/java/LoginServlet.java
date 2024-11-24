@@ -14,11 +14,11 @@ public class LoginServlet extends HttpServlet {
 
         // Biến lưu trữ role
         String role = null;
-
+        String name=null;
         try {
             // Kết nối với cơ sở dữ liệu
             Connection conn = Database.getConnection();
-            String sql = "SELECT Role FROM admin WHERE Username = ? AND Password = ?";
+            String sql = "SELECT Role FROM admin WHERE Email = ? AND Password = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -27,7 +27,14 @@ public class LoginServlet extends HttpServlet {
             if (rs.next()) {
                 role = rs.getString("Role"); // Lấy role từ cơ sở dữ liệu
             }
-
+            String sql1="SELECT CustomerID FROM customer WHERE Email = ? AND Password = ?";
+            PreparedStatement stmt1 = conn.prepareStatement(sql1);
+            stmt1.setString(1, username);
+            stmt1.setString(2, password);
+            ResultSet rs1 = stmt1.executeQuery();
+            if (rs1.next()) {
+                name = rs1.getString("CustomerID"); // Lấy role từ cơ sở dữ liệu
+            }
             // Kiểm tra role và điều hướng
             if (role != null) {
                 if (role.equals("admin")) {
@@ -39,7 +46,10 @@ public class LoginServlet extends HttpServlet {
                 } else {
                     response.sendRedirect("login.jsp?error=Invalid Role");
                 }
-            } else {
+            }else if (name != null) {
+                
+                response.sendRedirect("flights.jsp");
+            }  else {
                 response.sendRedirect("login.jsp?error=Invalid Username or Password");
             }
 

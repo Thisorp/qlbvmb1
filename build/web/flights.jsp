@@ -19,28 +19,7 @@
         <title>flights</title>
     </head>
     <body>
-        <form action="FlightServlet" method="post">
-            <input type="hidden" name="action" value="create">
-            <label for="airlineId">Airline ID:</label>
-            <input type="text" id="airlineId" name="airlineId" required>
-
-            <label for="fromAirportId">From Airport ID:</label>
-            <input type="text" id="fromAirportId" name="fromAirportId" required>
-
-            <label for="toAirportId">To Airport ID:</label>
-            <input type="text" id="toAirportId" name="toAirportId" required>
-
-            <label for="departureTime">Departure Time:</label>
-            <input type="datetime-local" id="departureTime" name="departureTime" required>
-
-            <label for="arrivalTime">Arrival Time:</label>
-            <input type="datetime-local" id="arrivalTime" name="arrivalTime" required>
-
-            <label for="gate">Gate:</label>
-            <input type="text" id="gate" name="gate" required>
-
-            <button type="submit">Add Flight</button>
-        </form>
+        
         <%
             List<Flight> flights = new ArrayList<>();
             try (Connection con = Database.getConnection()) {
@@ -92,14 +71,16 @@
         <td><%= flight.getArrivalTime() %></td>
         <td><%= flight.getGate() %></td>
         <td>
-            <a href="flights?action=edit&flightId=<%= flight.getFlightID() %>">Edit</a>
-            <a href="flights?action=delete&flightId=<%= flight.getFlightID() %>">Delete</a>
+            <a href="FlightServlet?action=edit&flightId=<%= flight.getFlightID() %>">Edit</a>
+            <a href="FlightServlet?action=delete&flightId=<%= flight.getFlightID() %>">Delete</a>
+            <a href="SeatServlet?flightId=<%= flight.getFlightID() %>">Booking</a>
         </td>
     </tr>
             <%
                 }
             %>
         </table>
-            <jsp:include page="airline.jsp"></jsp:include>
+            
+            
     </body>
 </html>

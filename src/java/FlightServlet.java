@@ -71,7 +71,7 @@ public class FlightServlet extends HttpServlet {
         } else if ("delete".equals(action)) {
             deleteFlight(request, response);
         } else {
-            response.sendRedirect("flights.jsp");
+            response.sendRedirect("managerFlight.jsp");
         }
     }
 
@@ -86,17 +86,32 @@ public class FlightServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if ("create".equals(action)) {
+            String flightid=request.getParameter("flightid");
+            String airlineId = request.getParameter("airlineId");
+            String fromAirportId = request.getParameter("fromAirportId");
+            String toAirportId = request.getParameter("toAirportId");
+            String departureTime = request.getParameter("departureTime");
+            String arrivalTime = request.getParameter("arrivalTime");
+            String gate = request.getParameter("gate");
             try {
-                createFlight(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(FlightServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Connection con = Database.getConnection();
+            String sql = "INSERT INTO flight (FlightID, AirlineID, FromAirportID, ToAirportID, DepartureTime, ArrivalTime, Gate) VALUES (?, ?, ?, ?, ?, ?,?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(flightid));
+            statement.setInt(2, Integer.parseInt(airlineId));
+            statement.setInt(3, Integer.parseInt(fromAirportId));
+            statement.setInt(4, Integer.parseInt(toAirportId));
+            statement.setString(5, departureTime);
+            statement.setString(6, arrivalTime);
+            statement.setString(7, gate);
+            statement.executeUpdate();
+            
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } else if ("update".equals(action)) {
-            updateFlight(request, response);
-        }
+            response.sendRedirect("FlightServlet");
+            
+           
     }
 
     /**
@@ -113,31 +128,7 @@ public class FlightServlet extends HttpServlet {
         // Use a JSP page to display the list
     }
 
-    private void createFlight(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
-        String airlineId = request.getParameter("airlineId");
-        String fromAirportId = request.getParameter("fromAirportId");
-        String toAirportId = request.getParameter("toAirportId");
-        String departureTime = request.getParameter("departureTime");
-        String arrivalTime = request.getParameter("arrivalTime");
-        String gate = request.getParameter("gate");
-
-        try (Connection con = Database.getConnection()) {
-            String sql = "INSERT INTO flight (AirlineID, FromAirportID, ToAirportID, DepartureTime, ArrivalTime, Gate) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(airlineId));
-            statement.setInt(2, Integer.parseInt(fromAirportId));
-            statement.setInt(3, Integer.parseInt(toAirportId));
-            statement.setString(4, departureTime);
-            statement.setString(5, arrivalTime);
-            statement.setString(6, gate);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        response.sendRedirect("flights.jsp");
-    }
-
+    
     private void editFlight(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Logic to fetch flight details for editing
     }
@@ -158,6 +149,6 @@ public class FlightServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("flights.jsp");
+        response.sendRedirect("FlightServlet");
     }
 }
