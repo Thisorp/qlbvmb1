@@ -6,7 +6,9 @@ import java.sql.SQLException;
 
 public class Database {
     // Thông tin kết nối cơ sở dữ liệu
+
     private static final String DB_URL = "jdbc:mysql://localhost:3307/abc"; // Thay "your_database_name" bằng tên cơ sở dữ liệu của bạn
+
     private static final String DB_USER = "root"; // Thay đổi thông tin tài khoản và mật khẩu nếu cần
     private static final String DB_PASSWORD = ""; // Thay đổi mật khẩu của bạn
 

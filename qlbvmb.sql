@@ -1,5 +1,5 @@
 CREATE TABLE `admin` (
-  `Id` int PRIMARY KEY,
+  `Id` int AUTO_INCREMENT PRIMARY KEY,
   `Username` varchar(255),
   `Password` varchar(255),
   `Email` varchar(255),
@@ -8,20 +8,20 @@ CREATE TABLE `admin` (
 );
 
 CREATE TABLE `airline` (
-  `AirlineID` int PRIMARY KEY,
+  `AirlineID` int AUTO_INCREMENT PRIMARY KEY,
   `Name` varchar(255),
   `ContactInfo` varchar(255)
 );
 
 CREATE TABLE `airport` (
-  `AirportID` int PRIMARY KEY,
+  `AirportID` int AUTO_INCREMENT PRIMARY KEY,
   `Name` varchar(255),
   `Location` varchar(255),
   `ContactInfo` varchar(255)
 );
 
 CREATE TABLE `customer` (
-  `CustomerID` int PRIMARY KEY,
+  `CustomerID` int AUTO_INCREMENT PRIMARY KEY,
   `Name` varchar(255),
   `Email` varchar(255),
   `Phone` varchar(255),
@@ -29,7 +29,7 @@ CREATE TABLE `customer` (
 );
 
 CREATE TABLE `flight` (
-  `FlightID` int PRIMARY KEY,
+  `FlightID` int AUTO_INCREMENT PRIMARY KEY,
   `AirlineID` int,
   `FromAirportID` int,
   `ToAirportID` int,
@@ -39,7 +39,7 @@ CREATE TABLE `flight` (
 );
 
 CREATE TABLE `seat` (
-  `SeatID` int PRIMARY KEY,
+  `SeatID` int AUTO_INCREMENT PRIMARY KEY,
   `FlightID` int,
   `SeatNumber` varchar(255),
   `IsAvailable` boolean,
@@ -47,7 +47,7 @@ CREATE TABLE `seat` (
 );
 
 CREATE TABLE `booking` (
-  `BookingID` int PRIMARY KEY,
+  `BookingID` int AUTO_INCREMENT PRIMARY KEY,
   `CustomerID` int,
   `FlightID` int,
   `SeatID` int,
@@ -89,6 +89,7 @@ ALTER TABLE `flight_statistics` ADD FOREIGN KEY (`AirlineID`) REFERENCES `airlin
 ALTER TABLE `flight_revenue` ADD FOREIGN KEY (`FlightID`) REFERENCES `flight` (`FlightID`);
 
 ALTER TABLE `flight_revenue` ADD FOREIGN KEY (`AirlineID`) REFERENCES `airline` (`AirlineID`);
+
 -- Insert data into admin table
 INSERT INTO `admin` (`Id`, `Username`, `Password`, `Email`, `Phone`, `Role`) VALUES
 (1, 'admin1', '123456', 'admin1@example.com', '1234567890', 'admin'),
