@@ -6,7 +6,7 @@
 <body>
     <h2>Login</h2>
     <form action="LoginServlet" method="POST">
-        <label for="username">Username:</label>
+        <label for="username">Email:</label>
         <input type="text" id="username" name="username" required><br><br>
 
         <label for="password">Password:</label>

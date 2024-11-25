@@ -5,52 +5,64 @@ import java.io.*;
 import java.sql.*;
 
 public class LoginServlet extends HttpServlet {
-    // Đảm bảo bạn đã cấu hình file web.xml hoặc sử dụng annotations để khai báo servlet
-     @Override
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy thông tin đăng nhập từ form
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // Biến lưu trữ role
+        // Biến lưu trữ role và customerID
         String role = null;
-        String name=null;
-        try {
-            // Kết nối với cơ sở dữ liệu
-            Connection conn = Database.getConnection();
-            String sql = "SELECT Role FROM admin WHERE Email = ? AND Password = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
+        String customerID = null;
 
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                role = rs.getString("Role"); // Lấy role từ cơ sở dữ liệu
-            }
-            String sql1="SELECT CustomerID FROM customer WHERE Email = ? AND Password = ?";
-            PreparedStatement stmt1 = conn.prepareStatement(sql1);
-            stmt1.setString(1, username);
-            stmt1.setString(2, password);
-            ResultSet rs1 = stmt1.executeQuery();
-            if (rs1.next()) {
-                name = rs1.getString("CustomerID"); // Lấy role từ cơ sở dữ liệu
-            }
-            // Kiểm tra role và điều hướng
-            if (role != null) {
-                if (role.equals("admin")) {
-                    response.sendRedirect("admin.jsp");
-                } else if (role.equals("airport")) {
-                    response.sendRedirect("AirportServlet");
-                } else if (role.equals("airline")) {
-                    response.sendRedirect("FlightServlet");
-                } else {
-                    response.sendRedirect("login.jsp?error=Invalid Role");
+        try (Connection conn = Database.getConnection()) { // Sử dụng try-with-resources để tự động đóng kết nối
+            // Truy vấn kiểm tra tài khoản admin
+            String adminQuery = "SELECT Role FROM admin WHERE Email = ? AND Password = ?";
+            try (PreparedStatement adminStmt = conn.prepareStatement(adminQuery)) {
+                adminStmt.setString(1, username);
+                adminStmt.setString(2, password);
+                try (ResultSet adminRs = adminStmt.executeQuery()) {
+                    if (adminRs.next()) {
+                        role = adminRs.getString("Role");
+                    }
                 }
-            }else if (name != null) {
-                
+            }
+
+            // Truy vấn kiểm tra tài khoản customer nếu không tìm thấy role
+            if (role == null) {
+                String customerQuery = "SELECT CustomerID FROM customer WHERE Email = ? AND Password = ?";
+                try (PreparedStatement customerStmt = conn.prepareStatement(customerQuery)) {
+                    customerStmt.setString(1, username);
+                    customerStmt.setString(2, password);
+                    try (ResultSet customerRs = customerStmt.executeQuery()) {
+                        if (customerRs.next()) {
+                            customerID = customerRs.getString("CustomerID");
+                        }
+                    }
+                }
+            }
+
+            // Điều hướng dựa trên kết quả
+            if (role != null) {
+                switch (role) {
+                    case "admin":
+                        response.sendRedirect("admin.jsp");
+                        break;
+                    case "airport":
+                        response.sendRedirect("AirportServlet");
+                        break;
+                    case "airline":
+                        response.sendRedirect("FlightServlet");
+                        break;
+                    default:
+                        response.sendRedirect("login.jsp?error=Invalid Role");
+                        break;
+                }
+            } else if (customerID != null) {
                 response.sendRedirect("flights.jsp");
-            }  else {
-                response.sendRedirect("login.jsp?error=Invalid Username or Password");
+            } else {
+                response.sendRedirect("login.jsp?error=Invalid Email or Password");
             }
 
         } catch (SQLException e) {
