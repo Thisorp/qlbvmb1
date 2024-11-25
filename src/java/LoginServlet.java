@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             if (role != null) {
                 switch (role) {
                     case "admin":
-                        response.sendRedirect("admin.jsp");
+                        response.sendRedirect("AdminServlet");
                         break;
                     case "airport":
                         response.sendRedirect("AirportServlet");

@@ -15,12 +15,16 @@
             <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/Flight.java</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/Database.java</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/FlightServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/AdminServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/testConnection.jsp</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/HomeServlet.java</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/web/airport.jsp</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/seat.java</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/LoginServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/admin.jsp</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/web/viewSeats.jsp</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/web/managerFlight.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/Admin.java</file>
             <file>file:/D:/java/javaweb/a4/qlbvmb1/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
