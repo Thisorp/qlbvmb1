@@ -4,11 +4,13 @@
  */
 
 import com.Database;
-import com.mysql.cj.Session;
+import com.booking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Huy pc
  */
-@WebServlet(urlPatterns = {"/bookSeat"})
-public class bookSeat extends HttpServlet {
+@WebServlet(urlPatterns = {"/infoBooking"})
+public class infoBooking extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class bookSeat extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookSeat</title>");            
+            out.println("<title>Servlet infoBooking</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet bookSeat at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet infoBooking at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +63,36 @@ public class bookSeat extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.getRequestDispatcher("/flights.jsp").forward(request, response);
+        
+       // Get customerId from session
+        Integer customerId = (Integer) request.getSession(false).getAttribute("customerId");
+        
+        ArrayList<booking> bookingList = new ArrayList<>();
+        try (Connection con = Database.getConnection()) {
+            String sql = "SELECT c.Name AS CustomerName, a.Name AS AirlineName, ap1.Name AS FromAirportName, ap2.Name AS ToAirportName, f.DepartureTime, f.ArrivalTime, f.Gate, s.SeatNumber, b.BookingDate FROM booking b JOIN customer c ON b.CustomerID = c.CustomerID JOIN flight f ON b.FlightID = f.FlightID JOIN airline a ON f.AirlineID = a.AirlineID JOIN airport ap1 ON f.FromAirportID = ap1.AirportID JOIN airport ap2 ON f.ToAirportID = ap2.AirportID JOIN seat s ON b.SeatID = s.SeatID WHERE c.CustomerID= ?";
+             PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
+             while (resultSet.next()) {
+                booking booking = new booking(); // Make sure the class name starts with an uppercase letter
+                booking.setCustomerName(resultSet.getString("CustomerName"));
+                booking.setAirlineName(resultSet.getString("AirlineName"));
+                booking.setFromAirportName(resultSet.getString("FromAirportName"));
+                booking.setToAirportName(resultSet.getString("ToAirportName"));
+                booking.setDepartureTime(resultSet.getDate("DepartureTime")); // Use getDate for java.sql.Date
+                booking.setArrivalTime(resultSet.getDate("ArrivalTime")); // Use getDate for java.sql.Date
+                booking.setGate(resultSet.getString("Gate"));
+                booking.setSeatNumber(resultSet.getString("SeatNumber"));
+                booking.setBookingDate(resultSet.getDate("BookingDate")); // Use getDate for java.sql.Date
+                bookingList.add(booking);
+            }
+            request.setAttribute("bookingList", bookingList);
+            request.getRequestDispatcher("bookingInfo.jsp").forward(request, response);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     /**
@@ -75,30 +106,7 @@ public class bookSeat extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int customerId = Integer.parseInt(request.getParameter("customerId"));
-        int flightId = Integer.parseInt(request.getParameter("flightId"));
-        int seatId = Integer.parseInt(request.getParameter("seatId"));
-
-        try (Connection con = Database.getConnection()) {
-            String sql = "INSERT INTO booking (CustomerID, FlightID, SeatID, BookingDate, Status) VALUES (?, ?, ?, NOW(), TRUE)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, customerId);
-            statement.setInt(2, flightId);
-            statement.setInt(3, seatId);
-            statement.executeUpdate();
-
-            // Update seat availability
-            String updateSeatSql = "UPDATE seat SET IsAvailable = FALSE WHERE SeatID = ?";
-            PreparedStatement updateStatement = con.prepareStatement(updateSeatSql);
-            updateStatement.setInt(1, seatId);
-            updateStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        HttpSession session=request.getSession();
-        session.setAttribute("customerId", customerId);
-        
-        response.sendRedirect("infoBooking");
+        processRequest(request, response);
     }
 
     /**
