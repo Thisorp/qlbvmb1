@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/")
 public class HomeServlet extends HttpServlet {
+     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Điều hướng người dùng tới login.jsp
         request.getRequestDispatcher("/login.jsp").forward(request, response);
