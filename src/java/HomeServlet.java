@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Điều hướng người dùng tới login.jsp
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/home.jsp").forward(request, response);
     }
 }
 
