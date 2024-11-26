@@ -1,11 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+
 <html>
 <head>
     <title>Admin Management</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+    <!-- Include header.jsp here -->
+    <jsp:include page="header.jsp" />
+
     <h1>Admin Management</h1>
     
     <!-- Form Thêm Tài Khoản -->

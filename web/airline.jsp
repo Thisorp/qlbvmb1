@@ -1,29 +1,28 @@
 <%@ page import="java.sql.*, com.Database" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <html>
 <head>
     <title>Airline Management</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+    <%@ include file="header.jsp" %>
     <h1>Airline Management</h1>
 
-    <!-- Form Thêm Hãng Hàng Không -->
-    <h3>Add New Airline</h3>
+    <!-- Form to Add or Edit Airline -->
+    <h3>Add / Edit Airline</h3>
     <form action="AirlineServlet" method="POST">
-        <input type="hidden" name="action" value="add">
-        Airline Name: <input type="text" name="name" required><br>
-        Contact Info: <input type="text" name="contactInfo" required><br>
-        <input type="submit" value="Add Airline">
+        <input type="hidden" name="action" value="<%= request.getParameter("edit") != null ? "update" : "add" %>">
+        <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
+        Airline Name: <input type="text" name="name" required 
+            value="<%= request.getParameter("name") != null ? request.getParameter("name") : "" %>"><br>
+        Contact Info: <input type="text" name="contactInfo" required 
+            value="<%= request.getParameter("contactInfo") != null ? request.getParameter("contactInfo") : "" %>"><br>
+        <input type="submit" value="<%= request.getParameter("edit") != null ? "Update Airline" : "Add Airline" %>">
     </form>
 
-    <!-- Form Tìm Kiếm -->
-    <h3>Search Airline</h3>
-    <form action="airline.jsp" method="GET">
-        Airline Name: <input type="text" name="search" placeholder="Search by name" value="<%= request.getParameter("search") %>"><br>
-        <input type="submit" value="Search">
-    </form>
-
-    <!-- Hiển Thị Danh Sách Các Hãng Hàng Không -->
+    <!-- Airline List Table -->
     <h3>All Airlines</h3>
     <table border="1">
         <tr>
@@ -33,25 +32,13 @@
             <th>Actions</th>
         </tr>
         <%
-            String search = request.getParameter("search");
             Connection con = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
 
             try {
-                // Kết nối đến cơ sở dữ liệu thông qua lớp Database
-                con = Database.getConnection(); // Đảm bảo bạn đã đưa lớp Database vào package đúng
-
-                String query = "SELECT * FROM airline";
-                if (search != null && !search.isEmpty()) {
-                    query += " WHERE Name LIKE ?";
-                }
-
-                ps = con.prepareStatement(query);
-                if (search != null && !search.isEmpty()) {
-                    ps.setString(1, "%" + search + "%");
-                }
-
+                con = Database.getConnection();
+                ps = con.prepareStatement("SELECT * FROM airline");
                 rs = ps.executeQuery();
 
                 while (rs.next()) {
@@ -61,12 +48,12 @@
                         <td><%= rs.getString("Name") %></td>
                         <td><%= rs.getString("ContactInfo") %></td>
                         <td>
-                            <!-- Các hành động Sửa và Xoá -->
-                            <a href="AirlineServlet?action=edit&id=<%= rs.getInt("AirlineID") %>">Edit</a> | 
+                            <!-- Actions: Edit, Delete -->
+                            <a href="airline.jsp?edit=true&id=<%= rs.getInt("AirlineID") %>&name=<%= rs.getString("Name") %>&contactInfo=<%= rs.getString("ContactInfo") %>">Edit</a> | 
                             <a href="AirlineServlet?action=delete&id=<%= rs.getInt("AirlineID") %>">Delete</a>
                         </td>
                     </tr>
-        <% 
+        <%
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -81,6 +68,5 @@
             }
         %>
     </table>
-        
 </body>
 </html>

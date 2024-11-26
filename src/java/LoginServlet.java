@@ -6,11 +6,7 @@ import java.sql.*;
 
 public class LoginServlet extends HttpServlet {
 
-   
-
-
     @Override
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy thông tin đăng nhập từ form
         String username = request.getParameter("username");
@@ -18,11 +14,8 @@ public class LoginServlet extends HttpServlet {
 
         // Biến lưu trữ role và customerID
         String role = null;
-
-        
-
         String customerID = null;
-        try (Connection conn = Database.getConnection()) { // Sử dụng try-with-resources để tự động đóng kết nối
+        try (Connection conn = Database.getConnection()) {
             // Truy vấn kiểm tra tài khoản admin
             String adminQuery = "SELECT Role FROM admin WHERE Email = ? AND Password = ?";
             try (PreparedStatement adminStmt = conn.prepareStatement(adminQuery)) {
@@ -51,6 +44,10 @@ public class LoginServlet extends HttpServlet {
 
             // Điều hướng dựa trên kết quả
             if (role != null) {
+                // Lưu thông tin role vào session
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("role", role);
                 switch (role) {
                     case "admin":
                         response.sendRedirect("AdminServlet");
@@ -66,10 +63,12 @@ public class LoginServlet extends HttpServlet {
                         break;
                 }
             } else if (customerID != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("customerID", customerID);
                 response.sendRedirect("flights.jsp");
             } else {
                 response.sendRedirect("login.jsp?error=Invalid Email or Password");
-
             }
 
         } catch (SQLException e) {

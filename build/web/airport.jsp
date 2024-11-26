@@ -4,8 +4,10 @@
 <html>
 <head>
     <title>Airport Management</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+    
     <h1>Airport Management</h1>
 
     <!-- Thêm Sân Bay -->

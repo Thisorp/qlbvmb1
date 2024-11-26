@@ -12,6 +12,7 @@
 <%@page import="java.sql.Connection" %>
 <%@page import="com.Flight" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,12 @@
         <title>flights</title>
     </head>
     <body>
-        
+        <%
+    String isEmbedded = request.getParameter("isEmbedded");
+%>
+<c:if test="${empty isEmbedded}">
+    <jsp:include page="header.jsp" />
+</c:if>
         <%
             List<Flight> flights = new ArrayList<>();
             try (Connection con = Database.getConnection()) {

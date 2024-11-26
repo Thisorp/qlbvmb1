@@ -1,46 +1,44 @@
-<%-- 
-    Document   : displayFlight
-    Created on : Nov 22, 2024, 8:30:00 PM
-    Author     : Huy pc
---%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-    </head>
-    <body>
-       <form action="FlightServlet" method="post">
-            <input type="hidden" name="action" value="create">
-            <label for="FlightId">Flight ID:</label>
-            <input type="text" id="flightid" name="flightid" required>
-            
-            <label for="airlineId">Airline ID:</label>
-            <input type="text" id="airlineId" name="airlineId" required>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Flights</title>
+</head>
+<body>
+    <h1>Manage Flights</h1>
 
-            <label for="fromAirportId">From Airport ID:</label>
-            <input type="text" id="fromAirportId" name="fromAirportId" required>
-
-            <label for="toAirportId">To Airport ID:</label>
-            <input type="text" id="toAirportId" name="toAirportId" required>
-
-            <label for="departureTime">Departure Time:</label>
-            <input type="datetime-local" id="departureTime" name="departureTime" required>
-
-            <label for="arrivalTime">Arrival Time:</label>
-            <input type="datetime-local" id="arrivalTime" name="arrivalTime" required>
-
-            <label for="gate">Gate:</label>
-            <input type="text" id="gate" name="gate" required>
-
-            <button type="submit">Add Flight</button>
-        </form>
-        
-        
-        <jsp:include page="flights.jsp"></jsp:include>
-        
-        <jsp:include page="airline.jsp"></jsp:include>
-    </body>
+    <!-- Hiển thị danh sách chuyến bay -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Flight ID</th>
+                <th>Airline Name</th>
+                <th>From Airport</th>
+                <th>To Airport</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Gate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Duyệt qua danh sách chuyến bay và hiển thị -->
+            <c:forEach var="flight" items="${flights}">
+                <tr>
+                    <td>${flight.flightID}</td>
+                    <td>${flight.airlineName}</td>
+                    <td>${flight.fromAirportName}</td>
+                    <td>${flight.toAirportName}</td>
+                    <td>${flight.departureTime}</td>
+                    <td>${flight.arrivalTime}</td>
+                    <td>${flight.gate}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</body>
 </html>

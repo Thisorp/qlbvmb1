@@ -1,16 +1,9 @@
 package com;
 
-
 import java.util.Date;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
- *
- * @author Huy pc
+ * Class Flight để đại diện cho thông tin chuyến bay.
  */
 public class Flight {
     private int flightID;
@@ -20,35 +13,11 @@ public class Flight {
     private Date departureTime;
     private Date arrivalTime;
     private String gate;
-    private String AirlineName;
-    private String FromAirportName;
-    private String ToAirportName;
+    private String airlineName;  // Tên của hãng hàng không
+    private String fromAirportName; // Tên của sân bay đi
+    private String toAirportName; // Tên của sân bay đến
 
-    public String getToAirportName() {
-        return ToAirportName;
-    }
-
-    public void setToAirportName(String ToAirportName) {
-        this.ToAirportName = ToAirportName;
-    }
-
-    public String getAirlineName() {
-        return AirlineName;
-    }
-
-    public void setAirlineName(String AirlineName) {
-        this.AirlineName = AirlineName;
-    }
-
-    public String getFromAirportName() {
-        return FromAirportName;
-    }
-
-    public void setFromAirportName(String FromAirportName) {
-        this.FromAirportName = FromAirportName;
-    }
-
-    // Getters and Setters
+    // Getter và Setter
     public int getFlightID() { return flightID; }
     public void setFlightID(int flightID) { this.flightID = flightID; }
     public int getAirlineID() { return airlineID; }
@@ -58,9 +27,33 @@ public class Flight {
     public int getToAirportID() { return toAirportID; }
     public void setToAirportID(int toAirportID) { this.toAirportID = toAirportID; }
     public Date getDepartureTime() { return departureTime; }
-    public void setDepartureTime(java.util.Date departureTime) { this.departureTime = departureTime; }
+    public void setDepartureTime(Date departureTime) { this.departureTime = departureTime; }
     public Date getArrivalTime() { return arrivalTime; }
-    public void setArrivalTime(java.util.Date arrivalTime) { this.arrivalTime = arrivalTime; }
+    public void setArrivalTime(Date arrivalTime) { this.arrivalTime = arrivalTime; }
     public String getGate() { return gate; }
     public void setGate(String gate) { this.gate = gate; }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
+    }
+
+    public String getFromAirportName() {
+        return fromAirportName;
+    }
+
+    public void setFromAirportName(String fromAirportName) {
+        this.fromAirportName = fromAirportName;
+    }
+
+    public String getToAirportName() {
+        return toAirportName;
+    }
+
+    public void setToAirportName(String toAirportName) {
+        this.toAirportName = toAirportName;
+    }
 }

@@ -1,0 +1,45 @@
+header {
+    background-color: #f2f2f2;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+header h2 {
+    margin: 0;
+}
+
+header a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #000;
+}
+
+header a:last-child {
+    margin-right: 0;
+}
+
+header a:hover {
+    color: #007bff;
+}
+
+.user {
+
+}
+.button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Màu nền xanh lá */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.button:hover {
+    background-color: #45a049; /* Màu khi hover */
+}
+

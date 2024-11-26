@@ -1,64 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 import com.Database;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Huy pc
- */
 @WebServlet(urlPatterns = {"/FlightServlet"})
 public class FlightServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FlightServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FlightServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // Method to handle GET requests
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,68 +31,90 @@ public class FlightServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // Method to handle POST requests (used for creating or updating flights)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String flightid=request.getParameter("flightid");
-            String airlineId = request.getParameter("airlineId");
-            String fromAirportId = request.getParameter("fromAirportId");
-            String toAirportId = request.getParameter("toAirportId");
-            String departureTime = request.getParameter("departureTime");
-            String arrivalTime = request.getParameter("arrivalTime");
-            String gate = request.getParameter("gate");
-            try {
-            Connection con = Database.getConnection();
-            String sql = "INSERT INTO flight (FlightID, AirlineID, FromAirportID, ToAirportID, DepartureTime, ArrivalTime, Gate) VALUES (?, ?, ?, ?, ?, ?,?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(flightid));
-            statement.setInt(2, Integer.parseInt(airlineId));
-            statement.setInt(3, Integer.parseInt(fromAirportId));
-            statement.setInt(4, Integer.parseInt(toAirportId));
-            statement.setString(5, departureTime);
-            statement.setString(6, arrivalTime);
-            statement.setString(7, gate);
-            statement.executeUpdate();
-            
-            } catch (Exception e) {
-                e.printStackTrace();
+        String flightid = request.getParameter("flightid");
+        String airlineId = request.getParameter("airlineId");
+        String fromAirportId = request.getParameter("fromAirportId");
+        String toAirportId = request.getParameter("toAirportId");
+        String departureTime = request.getParameter("departureTime");
+        String arrivalTime = request.getParameter("arrivalTime");
+        String gate = request.getParameter("gate");
+
+        String action = request.getParameter("action");
+
+        try (Connection con = Database.getConnection()) {
+            if ("edit".equals(action)) {
+                // Update flight details
+                String sql = "UPDATE flight SET AirlineID = ?, FromAirportID = ?, ToAirportID = ?, DepartureTime = ?, ArrivalTime = ?, Gate = ? WHERE FlightID = ?";
+                PreparedStatement statement = con.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(airlineId));
+                statement.setInt(2, Integer.parseInt(fromAirportId));
+                statement.setInt(3, Integer.parseInt(toAirportId));
+                statement.setString(4, departureTime);
+                statement.setString(5, arrivalTime);
+                statement.setString(6, gate);
+                statement.setInt(7, Integer.parseInt(flightid));
+                statement.executeUpdate();
+                response.sendRedirect("FlightServlet?action=list");
+            } else {
+                // Insert new flight
+                String sql = "INSERT INTO flight (FlightID, AirlineID, FromAirportID, ToAirportID, DepartureTime, ArrivalTime, Gate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement statement = con.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(flightid));
+                statement.setInt(2, Integer.parseInt(airlineId));
+                statement.setInt(3, Integer.parseInt(fromAirportId));
+                statement.setInt(4, Integer.parseInt(toAirportId));
+                statement.setString(5, departureTime);
+                statement.setString(6, arrivalTime);
+                statement.setString(7, gate);
+                statement.executeUpdate();
+                response.sendRedirect("FlightServlet?action=list");
             }
-            response.sendRedirect("FlightServlet");
-            
-           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    // Method to list all flights
     private void listFlights(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Logic to list flights from the database and set it in the request
-        // Use a JSP page to display the list
+        try (Connection con = Database.getConnection()) {
+            String sql = "SELECT * FROM flight";
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+
+            request.setAttribute("flights", rs);
+            request.getRequestDispatcher("/managerFlight.jsp").forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    
+    // Method to show flight details for editing
     private void editFlight(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Logic to fetch flight details for editing
+        String flightId = request.getParameter("flightId");
+
+        try (Connection con = Database.getConnection()) {
+            String sql = "SELECT * FROM flight WHERE FlightID = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(flightId));
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                // Set flight details as request attributes
+                request.setAttribute("flight", rs);
+                request.getRequestDispatcher("/editFlight.jsp").forward(request, response); // Forward to editFlight.jsp
+            } else {
+                response.sendRedirect("managerFlight.jsp"); // Flight not found, redirect
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void updateFlight(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Logic to update flight details in the database
-    }
-
+    // Method to delete a flight
     private void deleteFlight(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String flightId = request.getParameter("flightId");
 
@@ -149,6 +127,6 @@ public class FlightServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("FlightServlet");
+        response.sendRedirect("FlightServlet?action=list"); // Redirect after deletion
     }
 }
