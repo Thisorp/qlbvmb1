@@ -48,17 +48,22 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
             }
-
+            HttpSession session = request.getSession();
             // Điều hướng dựa trên kết quả
             if (role != null) {
                 switch (role) {
                     case "admin":
+                        
+                        session.setAttribute("admin", "admin");
                         response.sendRedirect("AdminServlet");
                         break;
                     case "airport":
+                        
+                        session.setAttribute("airport", "airport");
                         response.sendRedirect("AirportServlet");
                         break;
                     case "airline":
+                        session.setAttribute("airline", "airline");
                         response.sendRedirect("FlightServlet");
                         break;
                     default:
@@ -66,6 +71,7 @@ public class LoginServlet extends HttpServlet {
                         break;
                 }
             } else if (customerID != null) {
+                session.setAttribute("customer", "customer");
                 response.sendRedirect("flights.jsp");
             } else {
                 response.sendRedirect("login.jsp?error=Invalid Email or Password");
