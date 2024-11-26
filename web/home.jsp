@@ -164,15 +164,39 @@
                 padding: 10px 20px;
             }
 
+                        /* Thanh ngang */
             .navbar {
-                flex-direction: column;
-                align-items: flex-start;
+                background-color: #333;
+                overflow: hidden;
+                padding: 10px;
+                display: flex;
+                justify-content: flex-start; /* Canh lề trái cho các mục trong thanh */
+                align-items: center;
             }
 
-            .navbar a {
-                margin-left: 0;
-                margin-top: 10px;
+            /* Các mục trong thanh ngang */
+            .navbar-item {
+                padding: 10px 20px;
+                color: white;
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 5px;
+                transition: background-color 0.3s, transform 0.2s;
             }
+
+            /* Khi hover vào nút */
+            .navbar-item:hover {
+                background-color: #e74c3c;
+                transform: scale(1.1);
+            }
+
+            /* Khi nút bị active */
+            .navbar-item:active {
+                background-color: #c0392b;
+                transform: scale(1);
+            }
+
         }
     </style>
 </head>
@@ -186,6 +210,7 @@
             <a  onclick="navigate('airline-manager')">Airline manager</a>
             <a  onclick="navigate('airport-manager')">Airport manager</a>
             <a  onclick="navigate('account-manager')">Account manager</a>
+            <a onclick="navigate('customer-Information')">Customer Information</a>
             <a href="LoginServlet" id="login-link" onclick="toggleUserOptions()">Login</a>
              <div id="user-options" class="user-options">
 <!--                <button onclick="viewAccountInfo()">Thông tin tài khoản</button>-->
@@ -247,10 +272,10 @@
         // Điều hướng và kiểm tra quyền truy cập
         function navigate(section) {
             const permissions = {
-                customer: ["home", "booking"],
-                admin: ["home", "account-manager"],
-                airline: ["home", "airline-manager"],
-                airport: ["home", "airport-manager"]
+                customer: ["home", "booking", "customer-Information"],
+                admin: ["home", "account-manager", "customer-Information"],
+                airline: ["home", "airline-manager", "customer-Information"],
+                airport: ["home", "airport-manager", "customer-Information"]
             };
 
             if (permissions[userRole].includes(section)) {
@@ -349,6 +374,15 @@
                     .then(response => response.text())  // Lấy nội dung trang JSP
                     .then(html => {
                     document.getElementById('content').innerHTML = html;  // Chèn nội dung vào phần content
+                    })
+                    .catch(error => console.error('Error loading the JSP page:', error));
+                    break;
+                case 'customer-Information':
+                    // Load Customer Information from editCustomer.jsp
+                    fetch('editCustomer.jsp')  
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('content').innerHTML = html;
                     })
                     .catch(error => console.error('Error loading the JSP page:', error));
                     break;
