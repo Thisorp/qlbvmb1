@@ -21,8 +21,8 @@ public class AirlineServlet extends HttpServlet {
             deleteAirline(id);
         } else if ("edit".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            // Chuyển hướng tới trang edit.jsp hoặc xử lý sửa trực tiếp
-            response.sendRedirect("edit.jsp?id=" + id);
+            deleteAirline(id);
+            
         }
         
         response.sendRedirect("airline.jsp"); // Sau khi thực hiện hành động, quay lại trang airline.jsp

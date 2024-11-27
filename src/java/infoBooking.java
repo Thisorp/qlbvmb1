@@ -65,7 +65,8 @@ public class infoBooking extends HttpServlet {
             throws ServletException, IOException {
         
        // Get customerId from session
-        Integer customerId = (Integer) request.getSession(false).getAttribute("customerId");
+        HttpSession session=request.getSession();
+        int customerId = Integer.parseInt(session.getAttribute("CustomerID").toString());
         
         ArrayList<booking> bookingList = new ArrayList<>();
         try (Connection con = Database.getConnection()) {

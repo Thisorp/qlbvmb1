@@ -38,7 +38,7 @@
                 <form action="bookSeat" method="post">
                     <input type="hidden" name="flightId" value="<%= flightId %>">
                     <input type="hidden" name="seatId" value="<%= seat.getSeatID() %>">
-                    <input type="text" id="customerId" name="customerId" required>
+                    
                     <input type="submit" value="Book Seat">
                 </form>
             </td>

@@ -203,7 +203,7 @@
 
 <body>
     <header class="header">
-        <a  onclick="navigate('home')" class="logo"> <img src="image\CAAV_logo1.png" style="width: 50% ; height: 50%;" ></a>
+        <a  onclick="navigate('home')" class="logo"> <img src="image/CAAV_logo1.png" style="width: 50% ; height: 50%;" ></a>
         <nav class="navbar">
             <a  class="active" onclick="navigate('home')">Home</a>
             <a  onclick="navigate('booking')">Đặt vé</a>
