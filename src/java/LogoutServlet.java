@@ -3,15 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-import com.Database;
-<<<<<<< HEAD
-=======
-//import com.mysql.cj.Session;
->>>>>>> 70b39bd0eb218be1a61282749a375d6db91186ad
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +16,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Huy pc
  */
-@WebServlet(urlPatterns = {"/bookSeat"})
-public class bookSeat extends HttpServlet {
+@WebServlet(urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +36,10 @@ public class bookSeat extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookSeat</title>");            
+            out.println("<title>Servlet LogoutServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet bookSeat at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LogoutServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +57,7 @@ public class bookSeat extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.getRequestDispatcher("/flights.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -78,30 +71,11 @@ public class bookSeat extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int customerId = Integer.parseInt(request.getParameter("customerId"));
-        int flightId = Integer.parseInt(request.getParameter("flightId"));
-        int seatId = Integer.parseInt(request.getParameter("seatId"));
-
-        try (Connection con = Database.getConnection()) {
-            String sql = "INSERT INTO booking (CustomerID, FlightID, SeatID, BookingDate, Status) VALUES (?, ?, ?, NOW(), TRUE)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, customerId);
-            statement.setInt(2, flightId);
-            statement.setInt(3, seatId);
-            statement.executeUpdate();
-
-            // Update seat availability
-            String updateSeatSql = "UPDATE seat SET IsAvailable = FALSE WHERE SeatID = ?";
-            PreparedStatement updateStatement = con.prepareStatement(updateSeatSql);
-            updateStatement.setInt(1, seatId);
-            updateStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        HttpSession session = request.getSession(false); // Lấy session hiện tại (nếu có)
+        if (session != null) {
+            session.invalidate(); // Hủy session
         }
-        HttpSession session=request.getSession();
-        session.setAttribute("customerId", customerId);
-        
-        response.sendRedirect("infoBooking");
+        response.setStatus(HttpServletResponse.SC_OK); // Trả về mã trạng thái thành công
     }
 
     /**

@@ -14,39 +14,53 @@ import java.util.List;
 public class AdminServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String search = request.getParameter("search");
-        List<Admin> admins = new ArrayList<>();
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String action = request.getParameter("action");
 
+    if ("delete".equals(action)) {
         try (Connection con = Database.getConnection()) {
-            String query = "SELECT * FROM admin";
-            if (search != null && !search.trim().isEmpty()) {
-                query += " WHERE Username LIKE ?";
-            }
-            PreparedStatement ps = con.prepareStatement(query);
-            if (search != null && !search.trim().isEmpty()) {
-                ps.setString(1, "%" + search + "%");
-            }
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Admin admin = new Admin(
-                        rs.getInt("Id"),
-                        rs.getString("Username"),
-                        rs.getString("Password"),
-                        rs.getString("Email"),
-                        rs.getString("Phone"),
-                        rs.getString("Role")
-                );
-                admins.add(admin);
-            }
+            deleteAdmin(request, con); // Gọi phương thức deleteAdmin nếu hành động là xóa
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        request.setAttribute("admins", admins);
-        request.getRequestDispatcher("admin.jsp").forward(request, response);
+        response.sendRedirect("AdminServlet");  // Sau khi xóa, chuyển hướng lại danh sách
+        return;
     }
+
+    // Tiếp tục xử lý cho các action khác nếu cần
+    String search = request.getParameter("search");
+    List<Admin> admins = new ArrayList<>();
+
+    try (Connection con = Database.getConnection()) {
+        String query = "SELECT * FROM admin";
+        if (search != null && !search.trim().isEmpty()) {
+            query += " WHERE Username LIKE ?";
+        }
+        PreparedStatement ps = con.prepareStatement(query);
+        if (search != null && !search.trim().isEmpty()) {
+            ps.setString(1, "%" + search + "%");
+        }
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Admin admin = new Admin(
+                    rs.getInt("Id"),
+                    rs.getString("Username"),
+                    rs.getString("Password"),
+                    rs.getString("Email"),
+                    rs.getString("Phone"),
+                    rs.getString("Role")
+            );
+            admins.add(admin);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    request.setAttribute("admins", admins);
+    request.getRequestDispatcher("admin.jsp").forward(request, response);
+}
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -107,12 +121,22 @@ public class AdminServlet extends HttpServlet {
     }
 
     private void deleteAdmin(HttpServletRequest request, Connection con) throws SQLException {
-        int id = Integer.parseInt(request.getParameter("id"));
+    // Lấy id từ request
+    int id = Integer.parseInt(request.getParameter("id"));
 
-        String query = "DELETE FROM admin WHERE Id = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
+    // Câu lệnh SQL để xóa admin theo id
+    String query = "DELETE FROM admin WHERE Id = ?";
+
+    // Thực hiện câu lệnh xóa
+    try (PreparedStatement ps = con.prepareStatement(query)) {
+        ps.setInt(1, id);  // Đặt giá trị id vào câu lệnh
+        int affectedRows = ps.executeUpdate();  // Thực thi câu lệnh và lấy số dòng bị ảnh hưởng
+
+        // Kiểm tra nếu không có dòng nào bị ảnh hưởng, tức là không có admin nào được xóa
+        if (affectedRows == 0) {
+            throw new SQLException("No admin found with the given ID.");
         }
     }
+}
+
 }
