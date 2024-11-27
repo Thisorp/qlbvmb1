@@ -4,10 +4,7 @@
  */
 
 import com.Database;
-<<<<<<< HEAD
-=======
 //import com.mysql.cj.Session;
->>>>>>> 70b39bd0eb218be1a61282749a375d6db91186ad
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;

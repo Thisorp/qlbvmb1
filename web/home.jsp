@@ -346,7 +346,7 @@
                         <h2>Đặt vé máy bay</h2>
                         <p>Hãy chọn chuyến bay phù hợp với nhu cầu của bạn!</p>
                     `;
-                    fetch('flights.jsp')  // Đường dẫn đến trang JSP bạn muốn tải
+                    fetch('bookFlight.jsp')  // Đường dẫn đến trang JSP bạn muốn tải
                     .then(response => response.text())  // Lấy nội dung trang JSP
                     .then(html => {
                     document.getElementById('content').innerHTML = html;  // Chèn nội dung vào phần content
