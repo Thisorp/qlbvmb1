@@ -210,10 +210,10 @@
             <a  onclick="navigate('airline-manager')">Airline manager</a>
             <a  onclick="navigate('airport-manager')">Airport manager</a>
             <a  onclick="navigate('account-manager')">Account manager</a>
-            <a onclick="navigate('customer-Information')">Customer Information</a>
+<!--            <a onclick="navigate('customer-Information')">Customer Information</a>-->
             <a href="javascript:void(0)" id="login-link" onclick="toggleUserOptions()">Login</a>
              <div id="user-options" class="user-options">
-<!--                <button onclick="viewAccountInfo()">Thông tin tài khoản</button>-->
+                    <button onclick="navigate('customer-Information')">Customer Information</button>
                     <button  onclick="logout()">Đăng xuất</button>
             </div>
         </nav>
