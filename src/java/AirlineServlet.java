@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AirlineServlet")
 public class AirlineServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-     @Override
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -21,12 +22,13 @@ public class AirlineServlet extends HttpServlet {
             deleteAirline(id);
         } else if ("edit".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            // Chuyển hướng tới trang edit.jsp hoặc xử lý sửa trực tiếp
+            // Redirect to edit page or show edit form (if needed)
             response.sendRedirect("edit.jsp?id=" + id);
         }
-        
-        response.sendRedirect("airline.jsp"); // Sau khi thực hiện hành động, quay lại trang airline.jsp
+
+        response.sendRedirect("airline.jsp"); // After performing the action, redirect back to the airline list
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -35,9 +37,14 @@ public class AirlineServlet extends HttpServlet {
             String name = request.getParameter("name");
             String contactInfo = request.getParameter("contactInfo");
             addAirline(name, contactInfo);
+        } else if ("update".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String contactInfo = request.getParameter("contactInfo");
+            updateAirline(id, name, contactInfo);
         }
 
-        response.sendRedirect("airline.jsp"); // Sau khi thực hiện hành động, quay lại trang airline.jsp
+        response.sendRedirect("airline.jsp"); // After performing the action, redirect back to the airline list
     }
 
     private void addAirline(String name, String contactInfo) {
@@ -61,7 +68,7 @@ public class AirlineServlet extends HttpServlet {
         }
     }
 
-    private void editAirline(int id, String name, String contactInfo) {
+    private void updateAirline(int id, String name, String contactInfo) {
         try (Connection con = Database.getConnection();
              PreparedStatement ps = con.prepareStatement("UPDATE airline SET Name = ?, ContactInfo = ? WHERE AirlineID = ?")) {
             ps.setString(1, name);

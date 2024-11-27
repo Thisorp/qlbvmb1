@@ -75,7 +75,8 @@ public class bookSeat extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int customerId = Integer.parseInt(request.getParameter("customerId"));
+        HttpSession session=request.getSession();
+        int customerId = Integer.parseInt(session.getAttribute("CustomerID").toString());
         int flightId = Integer.parseInt(request.getParameter("flightId"));
         int seatId = Integer.parseInt(request.getParameter("seatId"));
 
@@ -95,9 +96,9 @@ public class bookSeat extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        HttpSession session=request.getSession();
-        session.setAttribute("customerId", customerId);
-        
+
+
+
         response.sendRedirect("infoBooking");
     }
 
