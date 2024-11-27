@@ -4,7 +4,6 @@
  */
 
 import com.Database;
-import com.mysql.cj.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
