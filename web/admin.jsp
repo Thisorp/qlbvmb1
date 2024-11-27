@@ -4,10 +4,40 @@
 <html>
 <head>
     <title>Admin Management</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"], input[type="button"] {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Admin Management</h1>
-    
+
     <!-- Form Thêm Tài Khoản -->
     <h3>Add New Admin</h3>
     <form action="AdminServlet" method="POST">
@@ -34,7 +64,7 @@
 
     <!-- Hiển Thị Danh Sách Admin -->
     <h3>Admin Accounts</h3>
-    <table border="1">
+    <table>
         <tr>
             <th>ID</th>
             <th>Username</th>
