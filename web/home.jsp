@@ -203,7 +203,7 @@
 
 <body>
     <header class="header">
-        <a  onclick="navigate('home')" class="logo"> <img src="image\CAAV_logo1.png" style="width: 50% ; height: 50%;" alt=""></a>
+        <a  onclick="navigate('home')" class="logo"> <img src="image\CAAV_logo1.png" style="width: 50% ; height: 50%;" ></a>
         <nav class="navbar">
             <a  class="active" onclick="navigate('home')">Home</a>
             <a  onclick="navigate('booking')">Đặt vé</a>
@@ -211,10 +211,10 @@
             <a  onclick="navigate('airport-manager')">Airport manager</a>
             <a  onclick="navigate('account-manager')">Account manager</a>
             <a onclick="navigate('customer-Information')">Customer Information</a>
-            <a href="LoginServlet" id="login-link" onclick="toggleUserOptions()">Login</a>
+            <a href="javascript:void(0)" id="login-link" onclick="toggleUserOptions()">Login</a>
              <div id="user-options" class="user-options">
 <!--                <button onclick="viewAccountInfo()">Thông tin tài khoản</button>-->
-                <button onclick="logout()">Đăng xuất</button>
+                    <button  onclick="logout()">Đăng xuất</button>
             </div>
         </nav>
     </header>
@@ -246,28 +246,40 @@
         %>
         // Kiểm tra trạng thái đăng nhập và thay đổi liên kết login
         function checkLoginStatus() {
-            const username = "<%= (name != null ? name : "") %>";
+            const username = "<%= (name != null ? name : "")%>";
             const loginLink = document.getElementById('login-link');
             const userOptions = document.getElementById('user-options');
-
-            if (username) {
-                
-                loginLink.textContent = username; // Hiển thị tên người dùng
-                userOptions.style.display = 'flex'; // Hiển thị các nút thông tin và đăng xuất
-            } else {
-                loginLink.textContent = 'Login'; // Nếu chưa đăng nhập, hiển thị "Login"
-                userOptions.style.display = 'none'; // Ẩn các nút
-            }
+           
+             if (username && username.trim() !== "") {
+        loginLink.textContent = username; // Hiển thị tên người dùng
+        loginLink.href = "javascript:void(0)"; // Ngăn chuyển hướng
+        userOptions.style.display = 'none'; // Ẩn menu mặc định
+    } else {
+        loginLink.textContent = 'Login'; // Hiển thị "Login" nếu chưa đăng nhập
+        loginLink.href = "LoginServlet"; // Chuyển hướng đến trang đăng nhập
+        userOptions.style.display = 'none'; // Ẩn menu
+    }
         }
-        // Vai trò người dùng hiện tại (giả lập)
+        // Vai trò người dùng hiện tại 
         const userRole = "<%=role %>";
 
-//        // Cập nhật hiệu ứng "active" khi nhấn vào menu
-//        function updateActiveLink(section) {
-//            const links = document.querySelectorAll('.navbar a');
-//            links.forEach(link => link.classList.remove('active'));
-//            document.querySelector(`.navbar a[onclick="navigate('${section}')"]`).classList.add('active');
-//        }
+        // Cập nhật hiệu ứng "active" khi nhấn vào menu
+        function updateActiveLink(section) {
+            const links = document.querySelectorAll('.navbar a');
+            links.forEach(link => {
+                // Xóa lớp "active" khỏi tất cả các liên kết
+                 link.classList.remove('active');
+
+                // Kiểm tra xem liên kết có thuộc phần được nhấn không
+                const linkSection = link.getAttribute('onclick');
+                if (linkSection && linkSection.includes(`navigate('${section}')`)) {
+                    link.classList.add('active'); // Thêm lớp "active" vào liên kết phù hợp
+                    console.log('Active link updated:', link); // Log kiểm tra
+                }
+                    
+            }); 
+            
+        }
         
         // Điều hướng và kiểm tra quyền truy cập
         function navigate(section) {
@@ -280,7 +292,7 @@
 
             if (permissions[userRole].includes(section)) {
                 showContent(section);
-//                updateActiveLink(section); // Gọi hàm cập nhật "active"
+                updateActiveLink(section); // Gọi hàm cập nhật "active"
             } else {
                  alert("Bạn không có quyền truy cập vào mục này!");
             }
@@ -395,24 +407,35 @@
         });
         // Đăng xuất
         function logout() {
-            <%
-                session.removeAttribute("name");  // Removes the "name" session attribute
-                session.invalidate(); // Optionally, invalidate the session entirely if you want to clear all session data
+            fetch('LogoutServlet', { method: 'POST' }) // Gửi yêu cầu POST đến servlet xử lý đăng xuất
+        .then(response => {
+            if (response.ok) {
+                // Nếu đăng xuất thành công, cập nhật giao diện
                 
-            %>
-                                        
-            checkLoginStatus(); // Cập nhật lại giao diện
+                window.location.href = 'home.jsp'; // Chuyển hướng đến trang chủ hoặc trang đăng nhập
+            } else {
+                alert("Có lỗi xảy ra khi đăng xuất!");
+            }
+        })
+        .catch(error => {
+            console.error('Error during logout:', error);
+            alert("Có lỗi xảy ra khi đăng xuất!");
+        });
         }
 
         // Hiển thị/ẩn các nút thông tin và đăng xuất khi nhấn vào tên người dùng
         function toggleUserOptions() {
             const username = "<%=name %>";
-            const userOptions = document.getElementById('user-options');
-            
-            // Chỉ hiển thị menu nếu người dùng đã đăng nhập
-            if (username) {
-                userOptions.style.display = userOptions.style.display === 'none' || userOptions.style.display === '' ? 'flex' : 'none';
-            }
+    const userOptions = document.getElementById('user-options');
+
+    if (username && username.trim() !== "") {
+        // Chỉ hiển thị menu nếu người dùng đã đăng nhập
+        userOptions.style.display = userOptions.style.display === 'none' || userOptions.style.display === '' ? 'flex' : 'none';
+    } else {
+        // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+        window.location.href = "LoginServlet";
+        userOptions.style.display='none';
+    }
         }
         
     </script>

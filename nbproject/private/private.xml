@@ -2,12 +2,34 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-
         <group>
-          
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/bookSeat.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/bookingInfo.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/login.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/flights.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/Flight.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/FlightServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/AdminServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/seat.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/LoginServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/managerFlight.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/booking.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/AirportServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/AirlineServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/SeatServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/airline.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/nbproject/build-impl.xml</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/infoBooking.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/Airport.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/home.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/Database.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/testConnection.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/HomeServlet.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/airport.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/admin.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/viewSeats.jsp</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/src/java/com/Admin.java</file>
+            <file>file:/D:/java/javaweb/a4/qlbvmb1/web/WEB-INF/web.xml</file>
         </group>
-
-        
-
     </open-files>
 </project-private>
