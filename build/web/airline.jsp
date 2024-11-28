@@ -149,81 +149,69 @@
 
         <!-- Display Airlines -->
         <h3>All Airlines</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Airline ID</th>
-            <th>Name</th>
-            <th>Contact Info</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <%
-            String search = request.getParameter("search");
-            Connection con = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        <table>
+            <thead>
+                <tr>
+                    <th>Airline ID</th>
+                    <th>Name</th>
+                    <th>Contact Info</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    String search = request.getParameter("search");
+                    Connection con = null;
+                    PreparedStatement ps = null;
+                    ResultSet rs = null;
 
-            try {
-                con = Database.getConnection();
-                String query = "SELECT * FROM airline";
-                if (search != null && !search.isEmpty()) {
-                    query += " WHERE Name LIKE ?";
-                }
+                    try {
+                        con = Database.getConnection();
+                        String query = "SELECT * FROM airline";
+                        if (search != null && !search.isEmpty()) {
+                            query += " WHERE Name LIKE ?";
+                        }
 
-                ps = con.prepareStatement(query);
-                if (search != null && !search.isEmpty()) {
-                    ps.setString(1, "%" + search + "%");
-                }
+                        ps = con.prepareStatement(query);
+                        if (search != null && !search.isEmpty()) {
+                            ps.setString(1, "%" + search + "%");
+                        }
 
-                rs = ps.executeQuery();
+                        rs = ps.executeQuery();
 
-                while (rs.next()) {
-        %>
-            <tr>
-                <td><%= rs.getInt("AirlineID") %></td>
-                <td>
-                    <form action="AirlineServlet" method="POST" style="display:inline;">
-                        <input type="hidden" name="action" value="text">
-                        <input type="hidden" name="id" value="<%= rs.getInt("AirlineID") %>">
-                        <input type="text" name="name" value="<%= rs.getString("Name") %>" required>
-                    </form>
-                </td>
-                <td>
-                    <form action="AirlineServlet" method="POST" style="display:inline;">
-                        <input type="hidden" name="action" value="text">
-                        <input type="hidden" name="id" value="<%= rs.getInt("AirlineID") %>">
-                        <input type="text" name="contactInfo" value="<%= rs.getString("ContactInfo") %>" required>
-                    </form>
-                </td>
-                <td class="actions">
-                    <form action="AirlineServlet" method="POST" style="display:inline;">
-                        <input type="hidden" name="action" value="update">
-                        <input type="hidden" name="id" value="<%= rs.getInt("AirlineID") %>">
-                        <input type="text" name="name" value="<%= rs.getString("Name") %>" required>
-                        <input type="text" name="contactInfo" value="<%= rs.getString("ContactInfo") %>" required>
-                        <input type="submit" value="Update">
-                    </form>
-                    <a href="AirlineServlet?action=delete&id=<%= rs.getInt("AirlineID") %>" onclick="return confirm('Are you sure you want to delete this airline?');">Delete</a>
-                </td>
-            </tr>
-        <%
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (rs != null) rs.close();
-                    if (ps != null) ps.close();
-                    if (con != null) con.close();
+                        while (rs.next()) {
+                %>
+                    <tr>
+                        <td class="center"><%= rs.getInt("AirlineID") %></td>
+                        <td class="table-text"><%= rs.getString("Name") %></td>
+                        <td class="table-text"><%= rs.getString("ContactInfo") %></td>
+                        <td class="actions">
+                            <form action="AirlineServlet" method="POST" >
+                                <input type="hidden" name="action" value="update">
+                                <input type="hidden" name="id" value="<%= rs.getInt("AirlineID") %>">
+                                <input type="text" name="name" value="<%= rs.getString("Name") %>" required>
+                                <input type="text" name="contactInfo" value="<%= rs.getString("ContactInfo") %>" required>
+                                <input type="submit" value="Update">
+                            </form>
+                            <a href="AirlineServlet?action=delete&id=<%= rs.getInt("AirlineID") %>" onclick="return confirm('Are you sure you want to delete this airline?');">Delete</a>
+                        </td>
+                    </tr>
+                <%
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                } finally {
+                    try {
+                        if (rs != null) rs.close();
+                        if (ps != null) ps.close();
+                        if (con != null) con.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        %>
-    </tbody>
-</table>
+                %>
+            </tbody>
+        </table>
 
     </div>
 
