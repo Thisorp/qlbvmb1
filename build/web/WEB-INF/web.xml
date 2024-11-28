@@ -4,7 +4,8 @@
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	 version="3.1">
-     <servlet>
+    
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>LoginServlet</servlet-class>
     </servlet>
@@ -31,6 +32,14 @@
     <servlet-mapping>
         <servlet-name>FlightServlet</servlet-name>
         <url-pattern>/FlightServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FlightStatisticsServlet</servlet-name>
+        <servlet-class>FlightStatisticsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FlightStatisticsServlet</servlet-name>
+        <url-pattern>/FlightStatisticsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

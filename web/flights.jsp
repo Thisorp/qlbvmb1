@@ -122,6 +122,7 @@
                 <td>
                     <a href="FlightServlet?action=edit&flightId=<%= flight.getFlightID() %>">Edit</a>
                     <a href="FlightServlet?action=delete&flightId=<%= flight.getFlightID() %>">Delete</a>
+                    <a href="SeatManagerServlet?flightId=<%= flight.getFlightID() %>">Detail Seat</a>
                 </td>
             </tr>
             <%

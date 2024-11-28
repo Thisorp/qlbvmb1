@@ -1,3 +1,5 @@
+package com;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -13,8 +15,7 @@ public class FlightStatistics {
     private int TotalSeatsBooked;
     private int AvailableSeats;
 
-    // Constructor, getters và setters
-
+    // Constructor
     public FlightStatistics(int FlightID, int AirlineID, int TotalSeatsBooked, int AvailableSeats) {
         this.FlightID = FlightID;
         this.AirlineID = AirlineID;
@@ -22,6 +23,7 @@ public class FlightStatistics {
         this.AvailableSeats = AvailableSeats;
     }
 
+    // Getters and setters
     public int getFlightID() {
         return FlightID;
     }

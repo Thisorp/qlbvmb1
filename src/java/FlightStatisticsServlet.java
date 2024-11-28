@@ -1,3 +1,4 @@
+import com.FlightStatistics;
 import com.Database;  // Nhập lớp Database
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class FlightStatisticsServlet extends HttpServlet {
         // Kết nối với cơ sở dữ liệu và truy vấn bảng flight_statistics
         List<FlightStatistics> flightStatistics = new ArrayList<>();
         
-        String query = "SELECT FlightID, AirlineID, TotalSeatsBooked, AvailableSeats FROM flight_statistics";
+        String query = "SELECT * FROM flight_statistics";
         
         try (Connection conn = Database.getConnection(); // Sử dụng phương thức từ lớp Database
              PreparedStatement stmt = conn.prepareStatement(query);

@@ -80,7 +80,7 @@
             <th>Seat ID</th>
             <th>Seat Number</th>
             <th>Price</th>
-            <th>Customer ID</th>
+            <th>Action</th>
         </tr>
         <%
             int flightId = Integer.parseInt(request.getParameter("flightId"));
