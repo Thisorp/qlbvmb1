@@ -189,7 +189,12 @@
                             <input type="submit" value="Update">
                         </form>
                         <!-- Xóa -->
-                        <a href="AirportServlet?action=delete&id=${airport.id}">Delete</a>
+                        <form action="AirportServlet" method="POST" style="display:inline;">
+    <input type="hidden" name="action" value="delete">
+    <input type="hidden" name="id" value="${airport.id}">
+    <button type="submit" style="background:none; border:none; color:#d32f2f; cursor:pointer;">Delete</button>
+</form>
+
                     </td>
                 </tr>
             </c:forEach>

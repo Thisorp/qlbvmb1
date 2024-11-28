@@ -71,13 +71,7 @@
 </head>
 <body>
     <!-- Thanh điều hướng -->
-    <div class="sidebar">
-        <h3>Navigation</h3>
-        <ul>
-            <li><a href="statistics.jsp">Flight Statistics</a></li>
-            <li><a href="flight_revenue">Flight Revenue</a></li>
-        </ul>
-    </div>
+    
 
     <!-- Nội dung chính -->
     <div class="content">
