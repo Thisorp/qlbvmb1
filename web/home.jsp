@@ -333,9 +333,10 @@
                         Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, hãy liên hệ với đội ngũ <strong>Cục hàng không Việt Nam</strong> qua:
                     </p>
                     <ul>
-                        <li><strong>Hotline:</strong> 024.38722394</li>
+                        <li><strong>Hotline:</strong> 0332781578</li>
                         
-                        <li><strong>Địa chỉ:</strong> 119 Nguyễn Sơn – Long Biên - Hà Nội</li>
+                        <li><strong>Địa chỉ:</strong> 16 Thái Hà - Đống Đa - Hà Nội</li>
+                        Phục vụ chuyến bay chất lượng cao, bao loa đèn bóng bánh, sở hữu cơ trưởng cùng dàn phi công trẻ khỏe. Đảm bảo bay không cao không tính phí
                     </ul>
 
                     <p>Cảm ơn bạn đã tin tưởng lựa chọn <strong>Cục hàng không Việt Nam</strong> đồng hành cùng hành trình của mình!</p>
