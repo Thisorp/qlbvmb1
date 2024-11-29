@@ -263,7 +263,7 @@
 
 ## 📞 Hỗ trợ
 Nếu gặp vấn đề, vui lòng liên hệ:
-- Email: sircumalot@gmail.com
+- Email: sircumalot47@gmail.com
 - GitHub Issues: [Mở issue tại đây](https://github.com/Thisorp/qlbvmb1/issues) 
 
 ---
