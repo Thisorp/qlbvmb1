@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Giới thiệu - Website Bán Vé Máy Bay</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f9;
+                color: #FFA500;
+                padding-top: 80px;
+            }
+            .navbar a.active {
+                color: yellow;
+                font-weight: bold;
+            }
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 20px 100px;
+                background: palevioletred;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 100;
+            }
+            .logo {
+                font-size: 32px;
+                color: white;
+                text-decoration: none;
+                font-weight: 700;
+            }
+            .navbar {
+                display: flex;
+                align-items: center;
+            }
+            .navbar a {
+                position: relative;
+                right: 120px;
+                font-size: 18px;
+                color: white;
+                text-decoration: none;
+                font-weight: 500;
+                margin-left: 40px;
+            }
+            .navbar a::before {
+                content: ' ';
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: white;
+                transition: .3s;
+            }
+            .navbar a:hover::before {
+                width: 100%;
+            }
+            .navbar a.active {
+                color: yellow;
+                font-weight: bold;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 20px auto;
+                padding: 20px;
+                background: #fff;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                min-height: 100vh;
+                background: url("image/background.jpg") no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+            h2, h3 {
+                color:palevioletred;
+            }
+            ul {
+                padding-left: 20px;
+            }
+            footer {
+                text-align: center;
+                padding: 10px 0;
+                background: palevioletred;
+                color: #fff;
+                margin-top: 20px;
+            }
+            footer a {
+                color: white;
+                text-decoration: none;
+                margin: 0 10px;
+            }
+            footer a:hover {
+                text-decoration: underline;
+            }
+            a {
+                color:red;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            @media (max-width: 768px) {
+                .header {
+                    padding: 10px 20px;
+                }
+                .navbar {
+                    background-color: #333;
+                    overflow: hidden;
+                    padding: 10px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+                .navbar-item {
+                    padding: 10px 20px;
+                    color: white;
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    transition: background-color 0.3s, transform 0.2s;
+                }
+                .navbar-item:hover {
+                    background-color: #e74c3c;
+                    transform: scale(1.1);
+                }
+                .navbar-item:active {
+                    background-color: #c0392b;
+                    transform: scale(1);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            <a class="logo" href="home.html"> <img src="image/CAAV_logo1.png" style="width: 50% ; height: 50%;" ></a>
+            <nav class="navbar">
+                <a class="active" href="home.html">Home</a>
+                <a href="#">Đặt vé</a>
+                <a href="#">Airline manager</a>
+                <a href="#">Airport manager</a>
+                <a href="#">Account manager</a>
+                <a href="#">Login</a>
+            </nav>
+        </header>
+        <div class="container" id="content">
+            <h2>Chào mừng bạn đến với <strong>Cục hàng không Việt Nam</strong></h2>
+            <p>
+                Chúng tôi tự hào là đơn vị cung cấp dịch vụ đặt vé máy bay trực tuyến nhanh chóng, tiện lợi và đáng tin cậy,
+                giúp bạn dễ dàng lựa chọn và đặt vé với giá cả cạnh tranh nhất.
+            </p>
+            <h3>Tầm nhìn và sứ mệnh</h3>
+            <ul>
+                <li><strong>Tầm nhìn:</strong> Trở thành nền tảng đặt vé máy bay hàng đầu, mang đến trải nghiệm tốt nhất cho khách hàng ở mọi nơi.</li>
+                <li><strong>Sứ mệnh:</strong> Giúp bạn hiện thực hóa giấc mơ bay với dịch vụ tối ưu, giá vé hợp lý và sự hỗ trợ tận tâm.</li>
+            </ul>
+            <h3>Chúng tôi mang lại điều gì?</h3>
+            <ul>
+                <li><strong>Hệ thống tìm kiếm thông minh:</strong> So sánh giá vé từ nhiều hãng hàng không chỉ trong vài giây.</li>
+                <li><strong>Đa dạng chuyến bay:</strong> Đáp ứng nhu cầu bay nội địa và quốc tế với lịch trình linh hoạt.</li>
+                <li><strong>Thanh toán an toàn:</strong> Hỗ trợ nhiều phương thức thanh toán hiện đại, bảo mật cao.</li>
+                <li><strong>Hỗ trợ 24/7:</strong> Đội ngũ chăm sóc khách hàng luôn sẵn sàng giải đáp mọi thắc mắc.</li>
+            </ul>
+            <h3>Liên hệ với chúng tôi</h3>
+            <p>
+                Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, hãy liên hệ với đội ngũ <strong>Cục hàng không Việt Nam</strong> qua:
+            </p>
+            <ul>
+                <li><strong>Hotline:</strong> 024.38722394</li>
+                <li><strong>Địa chỉ:</strong> 119 Nguyễn Sơn – Long Biên - Hà Nội</li>
+            </ul>
+            <p>Cảm ơn bạn đã tin tưởng lựa chọn <strong>Cục hàng không Việt Nam</strong> đồng hành cùng hành trình của mình!</p>
+        </div>
+        <footer>
+            <p>&copy; 2024 Cục hàng không Việt Nam. All Rights Reserved.</p>
+            <p>
+                <a href="#">Chính sách bảo mật</a> |
+                <a href="#">Điều khoản sử dụng</a>
+            </p>
+        </footer>
+    </body>
+</html>
