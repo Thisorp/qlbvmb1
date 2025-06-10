@@ -5,6 +5,11 @@ on:
     branches:
       - static-web
 
+permissions:
+  id-token: write
+  pages: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
