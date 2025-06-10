@@ -1,2 +1,20 @@
+# Ignore build output
 /build/
-/nbproject/private/
+web/WEB-INF/classes/
+*.class
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+nbproject/private/
+# Ignore NetBeans specific files
+nbproject/private/
+# Ignore OS generated files
+Thumbs.db
+ehthumbs.db
+Icon?
+# Ignore IDE files
+*.iml
+.idea/
+.vscode/
